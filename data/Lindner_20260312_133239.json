@@ -1,0 +1,50 @@
+{
+  "filename": "uebersicht-lindner-diagnose-software (2).pdf",
+  "company_name": "Lindner",
+  "extracted_at": "2026-03-12T13:32:39.623662",
+  "data": {
+    "operating_profit": {
+      "value": null,
+      "found": false,
+      "context": ""
+    },
+    "net_profit": {
+      "value": null,
+      "found": false,
+      "context": ""
+    },
+    "taxes": {
+      "value": null,
+      "found": false,
+      "context": ""
+    },
+    "interest": {
+      "value": null,
+      "found": false,
+      "context": ""
+    },
+    "depreciation": {
+      "value": null,
+      "found": false,
+      "context": ""
+    },
+    "employees": {
+      "value": null,
+      "found": false,
+      "unit": "number",
+      "context": ""
+    },
+    "ebit": {
+      "value": null,
+      "method": "not_calculated",
+      "note": "Nicht genug Daten zur EBIT-Berechnung",
+      "found": false
+    },
+    "ebitda": {
+      "value": null,
+      "method": "not_calculated",
+      "note": "EBITDA kann nicht berechnet werden - EBIT fehlend",
+      "found": false
+    }
+  }
+}

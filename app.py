@@ -7,6 +7,8 @@ import streamlit as st
 import os
 import json
 import logging
+import feedparser
+import urllib.parse
 from pathlib import Path
 from datetime import datetime
 import plotly.graph_objects as go
@@ -52,8 +54,73 @@ st.markdown("""
         color: #d32f2f;
         font-weight: bold;
     }
+
+    /* News Terminal Styling */
+    .main-title { color: #ffffff; font-size: 42px; font-weight: 800; margin-bottom: 24px; font-family: 'Inter', sans-serif; }
+    .section-header { border-left: 4px solid #38bdf8; padding-left: 15px; color: #f8fafc; font-size: 24px; font-weight: 700; margin-top: 35px; margin-bottom: 22px; }
+    .news-card { background: #161b22; padding: 24px; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 16px; }
+    .date-tag { color: #8b949e; font-size: 12px; margin-bottom: 10px; font-family: monospace; }
+    .link-btn { color: #38bdf8; text-decoration: none; font-weight: 600; font-size: 16px; }
+    .invest-badge { background: #238636; color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 12px; display: inline-block; }
+    div.stTextInput input { font-size: 18px; padding: 10px; }
 </style>
 """, unsafe_allow_html=True)
+
+# --- News Terminal Feature
+
+def fetch_all_news(company):
+    try:
+        query = urllib.parse.quote(f'intitle:"{company}" (Investition OR Werk OR Standort OR Bilanz)')
+        url = f"https://news.google.com/rss/search?q={query}&hl=de&gl=DE&ceid=DE:de"
+        feed = feedparser.parse(url)
+        return feed.entries
+    except Exception as e:
+        st.error(f"Fehler beim Abrufen der News: {e}")
+        return []
+
+
+def render_news_terminal():
+    st.markdown("<div class='main-title'>🔍 FirmenNewsSuchApperat</div>", unsafe_allow_html=True)
+
+    company_name = st.text_input("Unternehmensnamen eingeben:", placeholder="z.B. EGGER, Siemens...", key="company_input")
+
+    if company_name:
+        with st.spinner(f'Lade Meldungen für {company_name}...'):
+            all_news = fetch_all_news(company_name)
+            inv_keywords = ['invest', 'bau', 'werk', 'millionen', 'projekt', 'kapazität', 'standort']
+            invest_news = [n for n in all_news if any(w in n.title.lower() for w in inv_keywords)][:3]
+            other_news = [n for n in all_news if n not in invest_news][:7]
+
+            if invest_news:
+                st.markdown("<div class='section-header'>🏗️ Strategische Investitionen</div>", unsafe_allow_html=True)
+                cols = st.columns(3)
+                for i, item in enumerate(invest_news):
+                    with cols[i]:
+                        st.markdown(f"""
+                            <div class='news-card'>
+                                <div class='invest-badge'>STRATEGY</div>
+                                <div class='date-tag'>{item.published[:16]}</div>
+                                <p style='color:white; font-size:15px; font-weight:600; line-height:1.4;'>{item.title[:90]}...</p>
+                                <a class='link-btn' href='{item.link}' target='_blank'>Bericht lesen →</a>
+                            </div>
+                        """, unsafe_allow_html=True)
+
+            st.markdown("<div class='section-header'>🗞️ Aktuelle Schlagzeilen</div>", unsafe_allow_html=True)
+            if other_news:
+                for item in other_news:
+                    st.markdown(f"""
+                        <div class='news-card'>
+                            <div class='date-tag'>{item.published[:16]}</div>
+                            <div style='display: flex; justify-content: space-between; align-items: center;'>
+                                <span style='color:#e6edf3; font-size:16px; font-weight:500;'>{item.title}</span>
+                                <a class='link-btn' href='{item.link}' target='_blank'>Öffnen</a>
+                            </div>
+                        </div>
+                    """, unsafe_allow_html=True)
+            else:
+                st.info("Keine aktuellen News gefunden.")
+    else:
+        st.markdown("<p style='color:#8b949e;'>Bereit für die Abfrage. Bitte gib oben ein Unternehmen ein.</p>", unsafe_allow_html=True)
 
 # Konstanten
 UPLOAD_DIR = Path("uploads")
@@ -497,10 +564,17 @@ def render_sidebar():
 
 def main():
     """Hauptfunktion der Streamlit App."""
-    
+
+    st.sidebar.title("🔀 Modus wählen")
+    mode = st.sidebar.radio("", ["Financial Cockpit", "News Terminal"])
+
+    if mode == "News Terminal":
+        render_news_terminal()
+        return
+
     st.title("📊 Financial Cockpit")
     st.markdown("*Lokale Verarbeitung von Jahresabschlüssen mit semantischer LLM-Extraktion*")
-    
+
     # Lade gespeicherte Analyse bei Seitenrefresh
     load_progress()
     
