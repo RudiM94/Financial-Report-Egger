@@ -1,0 +1,50 @@
+{
+  "filename": "Adolf Darbo1.pdf",
+  "company_name": "Unbekanntes Unternehmen",
+  "extracted_at": "2026-03-12T10:13:07.750875",
+  "data": {
+    "operating_profit": {
+      "value": 10403059.0,
+      "found": true,
+      "context": "B I L A N Z    z u m    3 1 .  Dezember   2 0 2 3"
+    },
+    "net_profit": {
+      "value": 128311152.95,
+      "found": true,
+      "context": "B I L A N Z    z u m    3 1 .  Dezember   2 0 2 3"
+    },
+    "taxes": {
+      "value": 78276.53,
+      "found": true,
+      "context": "B I L A N Z    z u m    3 1 .  Dezember   2 0 2 3"
+    },
+    "interest": {
+      "value": 1174806.71,
+      "found": true,
+      "context": "B I L A N Z    z u m    3 1 .  Dezember   2 0 2 3"
+    },
+    "depreciation": {
+      "value": 5280.0,
+      "found": true,
+      "context": "B I L A N Z    z u m    3 1 .  Dezember   2 0 2 3"
+    },
+    "employees": {
+      "value": 5745596,
+      "found": true,
+      "unit": "number",
+      "context": ""
+    },
+    "ebit": {
+      "value": 10403059.0,
+      "method": "direct",
+      "note": "Betriebsergebnis direkt gefunden",
+      "found": true
+    },
+    "ebitda": {
+      "value": 10408339.0,
+      "method": "calculated",
+      "note": "Berechnet: EBIT (10,403,059) + Abschreibungen (5,280)",
+      "found": true
+    }
+  }
+}

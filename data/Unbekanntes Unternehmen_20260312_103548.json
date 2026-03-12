@@ -1,0 +1,50 @@
+{
+  "filename": "Egger bilanz gekürzt.pdf",
+  "company_name": "Unbekanntes Unternehmen",
+  "extracted_at": "2026-03-12T10:35:48.459146",
+  "data": {
+    "operating_profit": {
+      "value": 1234567,
+      "found": true,
+      "context": "Konsolidierte Gewinn- und Verlustrechnung"
+    },
+    "net_profit": {
+      "value": 1234567,
+      "found": true,
+      "context": ""
+    },
+    "taxes": {
+      "value": 12345679,
+      "found": true,
+      "context": "Ertragsteuern"
+    },
+    "interest": {
+      "value": 12345679,
+      "found": true,
+      "context": "Zinskosten"
+    },
+    "depreciation": {
+      "value": 12345679,
+      "found": true,
+      "context": "Wertminderungen auf Vermögenswerte"
+    },
+    "employees": {
+      "value": 1234,
+      "found": true,
+      "unit": "number",
+      "context": ""
+    },
+    "ebit": {
+      "value": 1234567,
+      "method": "direct",
+      "note": "Betriebsergebnis direkt gefunden",
+      "found": true
+    },
+    "ebitda": {
+      "value": 13580246,
+      "method": "calculated",
+      "note": "Berechnet: EBIT (1,234,567) + Abschreibungen (12,345,679)",
+      "found": true
+    }
+  }
+}
